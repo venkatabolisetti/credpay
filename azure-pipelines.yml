@@ -50,4 +50,39 @@ stages:
           $(tag)
           latest
 
-    
+    #########################################################
+    # USER SERVICE
+    #########################################################
+
+    - task: Docker@2
+      displayName: Build & Push User Service Image
+
+      inputs:
+        command: buildAndPush
+        containerRegistry: 'acrserviceconnection'
+        repository: $(userRepository)
+        dockerfile: user-service/dockerfile
+        buildContext: user-service
+
+        tags: |
+          $(tag)
+          latest
+
+    #########################################################
+    # PAYMENT SERVICE
+    #########################################################
+
+    - task: Docker@2
+      displayName: Build & Push Payment Service Image
+
+      inputs:
+        command: buildAndPush
+        containerRegistry: 'acrserviceconnection'
+        repository: $(paymentRepository)
+        dockerfile: payment-service/dockerfile
+        buildContext: payment-service
+
+        tags: |
+          $(tag)
+          latest
+
