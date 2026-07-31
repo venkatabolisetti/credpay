@@ -1,25 +1,16 @@
+#pipeline code
 
 pool:
   vmImage: ubuntu-latest
 
 variables:
-
-  # Azure Container Registry Service Connection
   acrServiceConnection: 'acrserviceconnection'
   frontendRepository: 'credpay/frontend'
   userRepository: 'credpay/user-service'
   paymentRepository: 'credpay/payment-service'
   tag: '$(Build.BuildId)'
 
-# =========================================================
-# STAGES
-# =========================================================
-
 stages:
-
-# =========================================================
-# STAGE 1 - BUILD & PUSH DOCKER IMAGES
-# =========================================================
 
 - stage: DockerBuild
   displayName: Docker Build & Push
@@ -29,16 +20,11 @@ stages:
     displayName: Build Docker Images
 
     steps:
-
     - checkout: self
 
-    #########################################################
-    # FRONTEND
-    #########################################################
 
     - task: Docker@2
       displayName: Build & Push Frontend Image
-
       inputs:
         command: buildAndPush
         containerRegistry: 'acrserviceconnection'
@@ -50,13 +36,9 @@ stages:
           $(tag)
           latest
 
-    #########################################################
-    # USER SERVICE
-    #########################################################
 
     - task: Docker@2
       displayName: Build & Push User Service Image
-
       inputs:
         command: buildAndPush
         containerRegistry: 'acrserviceconnection'
@@ -68,13 +50,9 @@ stages:
           $(tag)
           latest
 
-    #########################################################
-    # PAYMENT SERVICE
-    #########################################################
 
     - task: Docker@2
       displayName: Build & Push Payment Service Image
-
       inputs:
         command: buildAndPush
         containerRegistry: 'acrserviceconnection'
