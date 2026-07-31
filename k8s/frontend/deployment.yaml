@@ -1,0 +1,74 @@
+# =====================================================================
+# Frontend (React + Nginx) - serves static SPA on port 80
+# =====================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: credpay
+  labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/part-of: credpay
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frontend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: frontend
+        app.kubernetes.io/part-of: credpay
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: false # nginx:stable-alpine master needs to bind :80 / write pid
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: frontend
+          # Images live in the existing ACR (credproj.azurecr.io). AKS is
+          # attached to it via: az aks update --attach-acr credproj
+          image: credproj.azurecr.io/credpay/frontend:latest
+          # "Always" because the tag is the mutable `:latest` - IfNotPresent
+          # would let a node keep serving a stale cached image after a fresh
+          # push + `kubectl rollout restart`.
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+          # NOTE: no `capabilities: drop: ["ALL"]` here (unlike the backends).
+          # nginx:stable-alpine's root master process calls chown() on its
+          # cache dirs (/var/cache/nginx/*) at startup to hand them to the
+          # unprivileged "nginx" worker user - that chown() requires
+          # CAP_CHOWN. Dropping ALL capabilities (even while still UID 0)
+          # removes CAP_CHOWN too, which crashes the container with
+          # "nginx: [emerg] chown(...) failed (Operation not permitted)".
+          # Confirmed by testing directly against the live AKS cluster.
+          securityContext:
+            allowPrivilegeEscalation: false
