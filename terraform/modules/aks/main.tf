@@ -12,7 +12,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   #node_os_upgrade_channel = "NodeImage"
   azure_active_directory_role_based_access_control {
     azure_rbac_enabled = true
-    managed = true
+    tenant_id          = "997d0847-68e6-481c-b906-8025d95852e0"
   }
 
   default_node_pool {
