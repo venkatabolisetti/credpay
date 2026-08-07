@@ -40,6 +40,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
+              workingDirectory: 'terraform'
               environmentServiceNameAzureRM: 'Azure subscription 1(40f4ed45-fd9a-44dd-aefb-f83446de9465)'
           
           
