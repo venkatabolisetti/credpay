@@ -33,7 +33,7 @@ variable "aks_node_count" {
 
 variable "node_min_count" {
   type = number
-  default = 2
+  default = null
 }
 
 variable "node_max_count" {

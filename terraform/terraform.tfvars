@@ -13,5 +13,5 @@ postgres_admin_username = "postgres"
 
 postgres_database_name = "credpay_db"
 #postgres_host = ""
-log_retention_days = 7
+log_retention_days = 30
 
