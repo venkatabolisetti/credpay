@@ -43,7 +43,7 @@ variable "node_max_count" {
 
 variable "node_vm_size" {
   type = string
-  default = "Standard_DS2alds_v6"
+  default = "standard_d2lds_v6"
 }
 
 
