@@ -24,6 +24,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
+              workingDirectory: 'terraform'
               backendAzureRmUseEntraIdForAuthentication: false
               backendServiceArm: 'Azure subscription 1(40f4ed45-fd9a-44dd-aefb-f83446de9465)'
               backendAzureRmResourceGroupName: 'credpay_rg'
