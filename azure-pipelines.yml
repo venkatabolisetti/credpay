@@ -45,7 +45,13 @@ stages:
               workingDirectory: 'terraform'
               environmentServiceNameAzureRM: 'Azure subscription 1(40f4ed45-fd9a-44dd-aefb-f83446de9465)'
           
-          
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              workingDirectory: 'terraform'
+              commandOptions: '--auto-approve'
+              environmentServiceNameAzureRM: 'Azure subscription 1(40f4ed45-fd9a-44dd-aefb-f83446de9465)'
 
 
 
