@@ -1,35 +1,36 @@
-# Name added to the resources
 variable "name_prefix" {
-  type = string
+  description = "Prefix for resource names."
+  type        = string
 }
 
-# Resource group name
 variable "resource_group_name" {
-  type = string
+  description = "Resource group name."
+  type        = string
 }
 
-# Azure region
 variable "location" {
-  type = string
+  description = "Azure region."
+  type        = string
 }
 
-# Virtual Network address range
 variable "vnet_address_space" {
-  type = string
+  description = "Address space for the virtual network."
+  type        = string
 }
 
-# AKS subnet address range
 variable "aks_subnet_prefix" {
-  type = string
+  description = "Subnet prefix for the AKS cluster."
+  type        = string
 }
 
-# PostgreSQL subnet address range
 variable "postgres_subnet_prefix" {
-  type = string
+  description = "Subnet prefix for the PostgreSQL server."
+  type        = string
 }
 
-# Tags to apply
 variable "tags" {
-  type    = map(string)
-  default = {}
+  description = "Tags to apply to resources."
+  type        = map(string)
+  default     = {}
 }
+

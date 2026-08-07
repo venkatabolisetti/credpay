@@ -1,5 +1,5 @@
 
-resource "azurerm_log_analytics_workspace" "this" {
+resource "azurerm_log_analytics_workspace" "log" {
   name                = "log-${var.name_prefix}"
   location            = var.location
   resource_group_name = var.resource_group_name
@@ -13,8 +13,8 @@ resource "azurerm_log_analytics_solution" "container_insights" {
   solution_name         = "ContainerInsights"
   location              = var.location
   resource_group_name   = var.resource_group_name
-  workspace_resource_id = azurerm_log_analytics_workspace.this.id
-  workspace_name        = azurerm_log_analytics_workspace.this.name
+  workspace_resource_id = azurerm_log_analytics_workspace.log.id
+  workspace_name        = azurerm_log_analytics_workspace.log.name
 
   plan {
     publisher = "Microsoft"

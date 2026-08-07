@@ -33,7 +33,7 @@ variable "vm_size" {
   type        = string
 }
 
-variable "vnet_subnet_id" {
+variable "aks_subnet_id" {
   description = "Subnet ID for AKS nodes/pods."
   type        = string
 }

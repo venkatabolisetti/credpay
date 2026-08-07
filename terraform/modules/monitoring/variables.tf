@@ -16,7 +16,7 @@ variable "location" {
 variable "retention_days" {
   description = "Log Analytics retention in days."
   type        = number
-  default     = 30
+  default     = 7
 }
 
 variable "tags" {

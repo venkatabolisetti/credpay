@@ -12,7 +12,7 @@ resource "random_password" "admin" {
 }
 
 # ----- The server -----
-resource "azurerm_postgresql_flexible_server" "this" {
+resource "azurerm_postgresql_flexible_server" "postgres" {
   name                = "psql-${var.name_prefix}"
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -37,9 +37,9 @@ resource "azurerm_postgresql_flexible_server" "this" {
 }
 
 # ----- Application database -----
-resource "azurerm_postgresql_flexible_server_database" "credpay" {
+resource "azurerm_postgresql_flexible_server_database" "credpaydb" {
   name      = var.database_name
-  server_id = azurerm_postgresql_flexible_server.this.id
+  server_id = azurerm_postgresql_flexible_server.postgres.id
   charset   = "UTF8"
   collation = "en_US.utf8"
 
@@ -51,7 +51,7 @@ resource "azurerm_postgresql_flexible_server_database" "credpay" {
 # ----- Enforce SSL/TLS for all client connections -----
 resource "azurerm_postgresql_flexible_server_configuration" "require_ssl" {
   name      = "require_secure_transport"
-  server_id = azurerm_postgresql_flexible_server.this.id
+  server_id = azurerm_postgresql_flexible_server.postgres.id
   value     = "ON"
 }
 
@@ -60,7 +60,7 @@ resource "azurerm_postgresql_flexible_server_configuration" "require_ssl" {
 # simplest way for the AKS pods to reach the DB in a Dev/Test setup.
 resource "azurerm_postgresql_flexible_server_firewall_rule" "allow_azure" {
   name             = "AllowAzureServices"
-  server_id        = azurerm_postgresql_flexible_server.this.id
+  server_id        = azurerm_postgresql_flexible_server.postgres.id
   start_ip_address = "0.0.0.0"
   end_ip_address   = "0.0.0.0"
 }

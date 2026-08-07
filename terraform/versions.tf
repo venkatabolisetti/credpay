@@ -1,17 +1,13 @@
-# =====================================================================
-# CredPay - Terraform & Provider version constraints
-# =====================================================================
 terraform {
-  required_version = ">= 1.6.0"
-
+  required_version = ">= 1.5.0"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 4.0" # latest stable AzureRM 4.x line
+      version = "~> 3.112.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = "~> 3.6"
+      version = "~> 3.0"
     }
   }
 }

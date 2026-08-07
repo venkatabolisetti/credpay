@@ -1,88 +1,81 @@
-# =====================================================================
-# CredPay - Input Variables
-# =====================================================================
-
-# Azure Subscription ID
 variable "subscription_id" {
   type = string
 }
 
-# Azure Region (e.g. eastus)
-variable "location" {
-  type    = string
-  default = "canadacentral"
+variable "resource_group_name" {
+  type = string
 }
 
-# ----- Networking -----
+variable "location" {
+  type = string
+  default = "East US2"
+}
 
-# Virtual Network address range
 variable "vnet_address_space" {
-  type    = string
+  type = string
   default = "10.0.0.0/16"
 }
 
-# AKS subnet address range
 variable "aks_subnet_prefix" {
-  type    = string
-  default = "10.0.0.0/20"
+  type = string
+  default = "10.0.1.0/24"
 }
 
-# PostgreSQL subnet address range
 variable "postgres_subnet_prefix" {
-  type    = string
-  default = "10.0.16.0/24"
+  type = string
+  default = "10.0.2.0/24"
 }
 
-# ----- AKS -----
-
-# Number of nodes to start with
-variable "node_count" {
-  type    = number
-  default = 3
-}
-
-# Minimum nodes for autoscaling
-variable "node_min_count" {
-  type    = number
+variable "aks_node_count" {
+  type = number
   default = 2
 }
 
-# Maximum nodes for autoscaling
+variable "node_min_count" {
+  type = number
+  default = 2
+}
+
 variable "node_max_count" {
-  type    = number
-  default = 5
+  type = number
+  default = 2
 }
 
-# Size of each AKS node (VM)
-variable "vm_size" {
-  type    = string
-  default = "Standard_D2alds_v6"
+variable "node_vm_size" {
+  type = string
+  default = "Standard_DS2alds_v6"
 }
 
-# ----- PostgreSQL -----
 
-# PostgreSQL major version
+
 variable "postgres_version" {
-  type    = string
-  default = "18"
+  type = string
+  default = "16"
 }
 
-# PostgreSQL admin username
 variable "postgres_admin_username" {
-  type    = string
+  type = string
   default = "credpayadmin"
 }
 
-# Database name
-variable "database_name" {
-  type    = string
+
+variable "postgres_database_name" {
+  type = string
   default = "credpay"
 }
 
-# ----- Monitoring -----
 
-# Log Analytics retention in days
 variable "log_retention_days" {
-  type    = number
-  default = 30
+  type = number
+  default = 7
 }
+
+variable "key_vault_name" {
+  type = string
+}
+
+variable "key_vault_resource_group_name" {
+  type = string
+}
+
+
