@@ -1,5 +1,5 @@
 output "resource_group_name" {
-  value = module.resource-group.name
+  value = var.resource_group_name
 }
 
 output "vnet_id" {
@@ -15,7 +15,7 @@ output "aks_cluster_name" {
 #}
 
 output "aks_resource_group" {
-  value = module.resource-group.name
+  value = var.resource_group_name
 }
 
 output "aks_kubelet_identity_object_id" {
@@ -32,7 +32,7 @@ output "aks_node_resource_group" {
 }
 output "get_credentials_command" {
   description = "Convenience command to fetch kubeconfig."
-  value       = "az aks get-credentials --resource-group ${module.resource-group.name} --name ${module.aks.cluster_name} --overwrite-existing"
+  value       = "az aks get-credentials --resource-group ${var.resource_group_name} --name ${module.aks.cluster_name} --overwrite-existing"
 }
 
 #output "postgres_server_name" {
