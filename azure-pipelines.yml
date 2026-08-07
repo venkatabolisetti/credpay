@@ -35,6 +35,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'validate'
+              workingDirectory: 'terraform'
 
           - task: TerraformTask@5
             inputs:
