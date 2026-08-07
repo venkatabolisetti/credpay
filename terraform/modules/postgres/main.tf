@@ -11,9 +11,16 @@ resource "random_password" "admin" {
   min_special      = 2
 }
 
+resource "random_string" "postgres_suffix" {
+  length  = 6
+  upper   = false
+  special = false
+  numeric = true
+}
+
 # ----- The server -----
 resource "azurerm_postgresql_flexible_server" "postgres" {
-  name                = "psql-${var.name_prefix}"
+  name                = "psql-${var.name_prefix}-${random_string.postgres_suffix.result}"
   resource_group_name = var.resource_group_name
   location            = var.location
   version             = var.postgres_version
